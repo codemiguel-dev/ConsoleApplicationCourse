@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\calde\\OneDrive - INACAP\\Portafolio\\Programming_language\\c\u002B\u002B\\ConsoleApplicationCoursec\u002B\u002B\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{871A2FD8-C885-43FD-9F05-B5454696A582}|ConsoleApplicationCoursec\u002B\u002B.vcxproj|C:\\Users\\calde\\OneDrive - INACAP\\Portafolio\\Programming_language\\c\u002B\u002B\\ConsoleApplicationCoursec\u002B\u002B\\ConsoleApplicationCoursec\u002B\u002B.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{871A2FD8-C885-43FD-9F05-B5454696A582}|ConsoleApplicationCoursec\u002B\u002B.vcxproj|solutionrelative:ConsoleApplicationCoursec\u002B\u002B.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 94,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ConsoleApplicationCoursec\u002B\u002B.cpp",
+              "DocumentMoniker": "C:\\Users\\calde\\OneDrive - INACAP\\Portafolio\\Programming_language\\c\u002B\u002B\\ConsoleApplicationCoursec\u002B\u002B\\ConsoleApplicationCoursec\u002B\u002B.cpp",
+              "RelativeDocumentMoniker": "ConsoleApplicationCoursec\u002B\u002B.cpp",
+              "ToolTip": "C:\\Users\\calde\\OneDrive - INACAP\\Portafolio\\Programming_language\\c\u002B\u002B\\ConsoleApplicationCoursec\u002B\u002B\\ConsoleApplicationCoursec\u002B\u002B.cpp",
+              "RelativeToolTip": "ConsoleApplicationCoursec\u002B\u002B.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-29T06:44:15.231Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
