@@ -6,6 +6,7 @@
 #include <cstdlib> // Para system()
 #include <vector>
 #include <string>
+#include <unordered_map>
 using namespace std;
 
 void console1() {
@@ -297,7 +298,186 @@ void console7() {
     menu();
 }
 
+void console8() {
+    // Estructura para representar una cuenta bancaria
+    struct Account {
+        std::string username;
+        std::string password;
+        double balance = 0.0;
+    };
 
+    // Base de datos de cuentas
+    std::unordered_map<std::string, Account> accounts;
+
+    // Función para cargar cuentas desde un archivo
+    auto loadAccounts = [&accounts]() {
+        std::ifstream file("accounts.txt");
+        if (file.is_open()) {
+            Account account;
+            while (file >> account.username >> account.password >> account.balance) {
+                accounts[account.username] = account;
+            }
+            file.close();
+        }
+        else {
+            std::cout << "No se encontró el archivo de cuentas. Se creará uno nuevo.\n";
+        }
+        };
+
+    // Función para guardar cuentas en un archivo
+    auto saveAccounts = [&accounts]() {
+        std::ofstream file("accounts.txt");
+        if (file.is_open()) {
+            for (const auto& pair : accounts) {
+                const Account& account = pair.second;
+                file << account.username << " " << account.password << " " << account.balance << "\n";
+            }
+            file.close();
+        }
+        };
+
+    // Función para registrarse
+    auto registerAccount = [&accounts, &saveAccounts]() {
+        Account newAccount;
+        std::cout << "Ingrese un nombre de usuario: ";
+        std::cin >> newAccount.username;
+
+        if (accounts.find(newAccount.username) != accounts.end()) {
+            std::cout << "El nombre de usuario ya existe. Intente con otro.\n";
+            return;
+        }
+
+        std::cout << "Ingrese una contraseña: ";
+        std::cin >> newAccount.password;
+        newAccount.balance = 0.0;
+
+        accounts[newAccount.username] = newAccount;
+        saveAccounts();
+        std::cout << "Cuenta registrada exitosamente.\n";
+        };
+
+    // Función para iniciar sesión
+    auto login = [&accounts]() -> Account* {
+        std::string username, password;
+        std::cout << "Ingrese su nombre de usuario: ";
+        std::cin >> username;
+        std::cout << "Ingrese su contraseña: ";
+        std::cin >> password;
+
+        auto it = accounts.find(username);
+        if (it != accounts.end() && it->second.password == password) {
+            std::cout << "Inicio de sesión exitoso.\n";
+            return &it->second;
+        }
+
+        std::cout << "Nombre de usuario o contraseña incorrectos.\n";
+        return nullptr;
+        };
+
+    // Función para realizar depósitos
+    auto deposit = [](Account* account) {
+        double amount;
+        std::cout << "Ingrese el monto a depositar: ";
+        std::cin >> amount;
+
+        if (amount <= 0) {
+            std::cout << "El monto debe ser mayor a 0.\n";
+            return;
+        }
+
+        account->balance += amount;
+        std::cout << "Depósito realizado con éxito. Saldo actual: " << account->balance << " USD\n";
+        };
+
+    // Función para realizar retiros
+    auto withdraw = [](Account* account) {
+        double amount;
+        std::cout << "Ingrese el monto a retirar: ";
+        std::cin >> amount;
+
+        if (amount <= 0) {
+            std::cout << "El monto debe ser mayor a 0.\n";
+            return;
+        }
+
+        if (amount > account->balance) {
+            std::cout << "Fondos insuficientes.\n";
+            return;
+        }
+
+        account->balance -= amount;
+        std::cout << "Retiro realizado con éxito. Saldo actual: " << account->balance << " USD\n";
+        };
+
+    // Función para consultar el saldo
+    auto checkBalance = [](const Account* account) {
+        std::cout << "Saldo actual: " << account->balance << " USD\n";
+        };
+
+    // Menú principal
+    auto menu = [&]() {
+        int choice;
+        Account* loggedInAccount = nullptr;
+
+        loadAccounts();
+
+        do {
+            std::cout << "\n--- Simulador de Cajero Automático ---\n";
+            if (!loggedInAccount) {
+                std::cout << "1. Registrarse\n";
+                std::cout << "2. Iniciar sesión\n";
+                std::cout << "3. Salir\n";
+            }
+            else {
+                std::cout << "1. Depositar\n";
+                std::cout << "2. Retirar\n";
+                std::cout << "3. Consultar saldo\n";
+                std::cout << "4. Cerrar sesión\n";
+            }
+
+            std::cout << "Seleccione una opción: ";
+            std::cin >> choice;
+
+            if (!loggedInAccount) {
+                switch (choice) {
+                case 1:
+                    registerAccount();
+                    break;
+                case 2:
+                    loggedInAccount = login();
+                    break;
+                case 3:
+                    std::cout << "Gracias por usar el simulador. ¡Adiós!\n";
+                    break;
+                default:
+                    std::cout << "Opción inválida. Intente de nuevo.\n";
+                }
+            }
+            else {
+                switch (choice) {
+                case 1:
+                    deposit(loggedInAccount);
+                    break;
+                case 2:
+                    withdraw(loggedInAccount);
+                    break;
+                case 3:
+                    checkBalance(loggedInAccount);
+                    break;
+                case 4:
+                    loggedInAccount = nullptr;
+                    std::cout << "Sesión cerrada.\n";
+                    break;
+                default:
+                    std::cout << "Opción inválida. Intente de nuevo.\n";
+                }
+            }
+        } while (choice != 3 || loggedInAccount);
+        };
+
+    menu();
+
+}
 
 
 
@@ -313,7 +493,8 @@ int main() {
         std::cout << "5. Console 5 (Juego de Adivinanza)\n";
         std::cout << "6. Console 6 (Gestor de Tareas)\n";
         std::cout << "7. Console 7 (Gestor de finanzas)\n";
-        std::cout << "8. Exit\n";
+        std::cout << "8. Console 8 (Simulador básico de cajero automático)\n";
+        std::cout << "9. Exit\n";
         std::cout << "Enter your choice: ";
         std::cin >> option;
 
@@ -343,7 +524,11 @@ int main() {
             console7();
 			break;
 
-        case 8:
+		case 8:
+			console8();
+			break;
+
+        case 9:
             std::cout << "Exiting...\n";
             return 0; // Termina el programa
         default:
