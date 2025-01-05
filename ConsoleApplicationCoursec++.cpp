@@ -6,7 +6,10 @@
 #include <cstdlib> // Para system()
 #include <vector>
 #include <string>
+#include <ctime>
 #include <unordered_map>
+
+#include "ConsoleApplicationCoursec++.h"
 using namespace std;
 
 void console1() {
@@ -479,6 +482,37 @@ void console8() {
 
 }
 
+void console9() {
+    // Inicializar el generador de números aleatorios
+    std::srand(static_cast<unsigned int>(std::time(0)));
+
+    int length;
+    std::cout << "********Bienvenido al Generador de Contraseñas*******\n";
+    std::cout << "Ingrese la longitud de la contraseña: ";
+    std::cin >> length;
+
+    if (length <= 0) {
+        std::cout << "La longitud debe ser mayor a 0.\n";
+        return;
+    }
+
+    const std::string chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"   // Letras mayúsculas
+        "abcdefghijklmnopqrstuvwxyz"   // Letras minúsculas
+        "0123456789"                   // Números
+        "!@#$%^&*()-_=+[]{}|;:,.<>?/"; // Caracteres especiales
+
+    std::string password;
+
+    for (int i = 0; i < length; ++i) {
+        // Elegir un carácter aleatorio de la lista
+        char randomChar = chars[std::rand() % chars.length()];
+        password += randomChar;
+    }
+
+    std::cout << "Su contraseña generada es: " << password << "\n";
+}
+
 
 
 int main() {
@@ -494,7 +528,8 @@ int main() {
         std::cout << "6. Console 6 (Gestor de Tareas)\n";
         std::cout << "7. Console 7 (Gestor de finanzas)\n";
         std::cout << "8. Console 8 (Simulador básico de cajero automático)\n";
-        std::cout << "9. Exit\n";
+        std::cout << "9. Console 9 (Generador de contraseña)\n";
+        std::cout << "10. Exit\n";
         std::cout << "Enter your choice: ";
         std::cin >> option;
 
@@ -529,6 +564,10 @@ int main() {
 			break;
 
         case 9:
+            console9();
+            break;
+
+        case 10:
             std::cout << "Exiting...\n";
             return 0; // Termina el programa
         default:
